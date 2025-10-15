@@ -8,7 +8,7 @@
         <a href="/calendar"> Calendário </a>
         <a href="/list"> Lista de Manutenção </a>
 
-        <button href="/login" class="btnLogin"> LOGIN </button>
+        <a href="/loginpage" class="btnLogin">LOGIN</a>
       </nav>
     </div>
   </header>
@@ -23,12 +23,12 @@ export default {
 <style scooped>
 header {
   background-color: rgba(148, 71, 71, 0.658);
-  padding: 1rem;
+  padding: 1.2rem 2rem;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white
+  color: white;
 }
 
 .nav-links a {
@@ -38,8 +38,16 @@ header {
 }
 
 .btnLogin {
-    padding: 8px;
-    border: 20px 10px;
-    border-radius: 13px;
+    border: 1px  rgb(92, 5, 5);
+    background-color: rgb(92, 5, 5);
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: 0.3s, color 0.3s;
 }
+.btnLogin:hover{
+    background-color: rgb(165, 32, 32);
+    color: white
+}
+
+
 </style>
