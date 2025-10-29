@@ -1,18 +1,19 @@
 <template>
   <navbar />
-  <div class="ycontainer">
-    <div class="galerry-wrapper">
-      <div class="galerry">
-        <img src="" alt="">
-      </div>
+  <kpicard />
+    <div>
+        <h1>CRUD FULL STACK </h1>
+        <nav>
+            <router-link to="/users"> Users</router-link>
+        </nav>
     </div>
-  </div>
 </template>
 
 <script>
 import navbar from "../components/navbar.vue";
+import kpicard from "../components/KPICard.vue";
 export default {
-  components: { navbar },
+  components: { navbar, kpicard },
 };
 </script>
 
