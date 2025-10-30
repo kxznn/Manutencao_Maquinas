@@ -1,12 +1,5 @@
 <template>
   <navbar />
-  <kpicard />
-    <div>
-        <h1>CRUD FULL STACK </h1>
-        <nav>
-            <router-link to="/users"> Users</router-link>
-        </nav>
-    </div>
 </template>
 
 <script>

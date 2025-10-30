@@ -7,9 +7,8 @@
         <a href="/dashboard"> Dashboard </a>
         <a href="/calendar"> Calendário </a>
         <a href="/list"> Lista de Manutenção </a>
-
-        <a href="/loginpage" class="btnLogin">LOGIN</a>
       </nav>
+      <router-link to="/loginpage" class="btnLogin">Login</router-link>
     </div>
   </header>
 </template>
@@ -22,32 +21,72 @@ export default {
 
 <style scooped>
 header {
-  background-color: rgba(148, 71, 71, 0.658);
+  background-color: rgba(0, 67, 78, 0.658);
   padding: 1.2rem 2rem;
   text-align: center;
   display: flex;
+  margin: 10px;
   align-items: center;
   justify-content: space-between;
   color: white;
+  border-radius: 20px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* espaço entre os links e o botão */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .nav-links a {
+  position: relative;
   text-decoration: none;
   color: white;
-  margin: 24px;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-links a:hover {
+  color: #ffdddd;
+}
+
+/* Botão */
 .btnLogin {
-    border: 1px  rgb(92, 5, 5);
-    background-color: rgb(92, 5, 5);
-    padding: 8px 14px;
-    border-radius: 8px;
-    transition: 0.3s, color 0.3s;
-}
-.btnLogin:hover{
-    background-color: rgb(165, 32, 32);
-    color: white
+  border: none;
+  background-color: rgb(110, 184, 184);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none; /* garante que router-link pareça um botão */
 }
 
-
+.btnLogin:hover {
+  background-color: rgb(44, 90, 90);
+}
 </style>
