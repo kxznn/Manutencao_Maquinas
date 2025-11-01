@@ -21,7 +21,7 @@ export default {
 
 <style scooped>
 header {
-  background-color: rgba(0, 67, 78, 0.658);
+  background-color: rgba(12, 65, 73, 0.658);
   padding: 1.2rem 2rem;
   text-align: center;
   display: flex;
@@ -35,7 +35,7 @@ header {
 .navbar {
   display: flex;
   align-items: center;
-  gap: 32px; /* espaço entre os links e o botão */
+  gap: 32px;
 }
 
 .nav-links {
@@ -75,7 +75,7 @@ header {
   color: #ffdddd;
 }
 
-/* Botão */
+
 .btnLogin {
   border: none;
   background-color: rgb(110, 184, 184);
@@ -83,7 +83,7 @@ header {
   padding: 8px 14px;
   border-radius: 8px;
   cursor: pointer;
-  text-decoration: none; /* garante que router-link pareça um botão */
+  text-decoration: none;
 }
 
 .btnLogin:hover {
