@@ -1,5 +1,5 @@
 <template>
-    <div class="footer">
+    <div class="Footer">
         <div class="footer-main">
             <div class="footer-column">
                 <ul>
@@ -12,11 +12,10 @@
 
             <div class="footer-column">
                 <h3> ATENDIMENTOS </h3>
-                <p><strong>Telefone: <strong> (19) 98765-0908 </strong></p>
-                <p><strong>E-mail: <strong> system.maintenance@hotmail.com </strong></p>
-                <p><strong>Endereço: <strong> Rua das manutenções, 401. Campinas-SP </strong></p>
-                <p> Horario de Funcionamento: </p>
-                <p>Seg. à Sex. das 08h às 17h </p>
+                <p><strong>Telefone:</strong> (19) 98765-0908</p>
+                <p><strong>E-mail:</strong> system.maintenance@hotmail.com</p>
+                <p><strong>Endereço:</strong> Rua das manutenções, 401. Campinas-SP</p>
+                <p><strong>Telefone: (19) 98765-0908</strong></p>
             </div>
 
             <div class="footer-bottom">
@@ -29,26 +28,32 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-const currentYear = ref(new Date().getFullYear());
-
 export default {
-    name: 'footer'
+    name: 'Footer',
+    data() {
+        return {
+            currentYear: new Date().getFullYear()
+        };
+    }
 }
 </script>
 
 <style scoped>
-.footer {
-    background-color: black;
+.Footer {
+    background-color: rgb(6, 62, 77);
     color: #fff;
-    padding-top: 2.5rem;
+    padding-top: 1rem;
     font-size: 0.9rem;
+    min-width: 100vh;
 }
 
 .footer-main {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 0 1.2rem;
+    padding: 0 2.5rem;
+}
 
+.footer-column a{
+    text-decoration: none;
 }
 </style>

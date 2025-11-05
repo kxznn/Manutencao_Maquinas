@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="logotipo">LOGO</div>
+    <div class="logo">SysMaintenance</div>
     <div class="navbar">
       <nav class="nav-links">
         <a href="/"> Home</a>
@@ -22,7 +22,7 @@ export default {
 <style scooped>
 header {
   background-color: rgba(12, 65, 73, 0.658);
-  padding: 1.2rem 2rem;
+  padding: 1.5rem 2rem;
   text-align: center;
   display: flex;
   margin: 10px;
@@ -31,6 +31,8 @@ header {
   color: white;
   border-radius: 20px;
 }
+
+header 
 
 .navbar {
   display: flex;

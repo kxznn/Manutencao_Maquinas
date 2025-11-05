@@ -1,21 +1,24 @@
 <template>
   <navbar />
-  <h1>SysMaintenance</h1>
+  
 
-  <footer />
+  <div class="hero-container">
+    <h1>SysMaintenance</h1>
+  </div>
+  
+  <Footer />
 </template>
 
 <script>
 import navbar from "../components/navbar.vue";
-import footer from "../components/footer.vue"
+import Footer from "../components/footer.vue"
 export default {
-  components: { navbar, footer },
+  components: { navbar, Footer },
 };
 </script>
 
 <style scooped>
-div {
-  color: rgb(94, 27, 27);
+.hero-container {
+  color: #fff
 }
-
 </style>
