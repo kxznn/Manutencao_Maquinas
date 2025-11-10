@@ -1,8 +1,18 @@
 const mongoose = require("mongoose");
+
 async function connectDB(uri) {
-  mongoose.set("strictQuery", true);
-  await mongoose.connect(uri);
-  console.log("MongoDB conectado !");
+  try {
+    mongoose.set("strictQuery", true);
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log("✅ Conexão com MongoDB estabelecida");
+  } catch (error) {
+    console.error(" Erro ao conectar ao MongoDB:", error.message);
+    process.exit(1); 
+  }
 }
 
-module.exports = {connectDB};
+module.exports = { connectDB };

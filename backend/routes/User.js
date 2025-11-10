@@ -1,42 +1,70 @@
-const express = require('express');
+const express = require("express");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
-const Usuario = require('../model/Usuario')
+const User = require("../models/user");
 
-router.post('/', async (req, res) => {
-    try {
-        const usuario = new Usuario(req.body);
-        const salvo = await usuario.save();
-        res.status(201).json(salvo);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
+// Criar novo usuário (registro)
+router.post("/", async (req, res) => {
+  try {
+    const { nome, email, password } = req.body;
+
+    // Verifica se já existe usuário com esse email
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email já cadastrado." });
     }
+
+    // Criptografa a senha
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = new User({ nome, email, passwordHash });
+    const savedUser = await user.save();
+
+    res.status(201).json(savedUser);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
-router.get('/', async (req, res) => {
-    try {
-        const usuarios = await Usuario.find();
-        res.json(usuarios);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+// Listar todos os usuários
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find().select("-passwordHash"); // oculta hash
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-router.put('/:id', async (req, res) => {
-    try {
-        const atualizado = await Usuario.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(atualizado);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
+// Atualizar usuário
+router.put("/:id", async (req, res) => {
+  try {
+    const { nome, email } = req.body;
+    const updated = await User.findByIdAndUpdate(
+      req.params.id,
+      { nome, email },
+      { new: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
     }
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
-router.delete('/:id', async (req, res) => {
-    try {
-        await Usuario.findByIdAndDelete(req.params.id);
-        res.json({ mesagem: 'Usuario não encontrado' });
-    } catch (err) {
-        res.status(500).json({error: err.message});
+// Deletar usuário
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await User.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
     }
+    res.json({ message: "Usuário deletado com sucesso." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;

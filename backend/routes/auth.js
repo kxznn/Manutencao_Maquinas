@@ -2,10 +2,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {z} = require('zod');
-const User = require('../routes/User');
+const User = require('./user');
 const auth = require('../middleware/auth');
 
-const router - express.Router();
+const router = express.Router();
 
 const regiterSchema = z.object({
     name: z.string().min(2),
@@ -19,7 +19,7 @@ const loginSchema = z.object({
 });
 
 function singToken(user) {
-    retunr jwt.sing(
+    return jwt.sing(
         {
             sub: user._id.toString(),email: user.email,name: user.name},
             process.env.JWT_SECRET,
