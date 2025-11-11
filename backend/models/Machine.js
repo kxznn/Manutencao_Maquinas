@@ -1,14 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const machineSchema = new mongoose.Schema(
+const MaquinaSchema = new mongoose.Schema(
   {
-    nome: { type: String, required: true},
-    tipo: { type: String, required: true},
-    status: { type: String, required: true, enum: ["ativa", "inativa", "em manutenção"], default: "ativa"},
-    ultimaManutencao: {type: Date, required: true},
-    proximaManutencao: {type: Date, required: true},
+    nome: { type: String, required: true },
+    tipo: { type: String, required: true },
+    status: { type: String, required: true },
+    ultimaManutencao: { type: String, required: true },
+    proximaManutencao: { type: Date, required: true },
   },
-  {timestamps: true}
+  { timestamps: true }
 );
 
-module.exports = mongoose.model("Machine", machineSchema);
+module.exports = mongoose.model('Maquina', MaquinaSchema);
