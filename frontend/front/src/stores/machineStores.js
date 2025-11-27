@@ -1,28 +1,28 @@
-import api from '../service/api';
 import { defineStore } from 'pinia';
+import { maintenanceService } from '@/services/api';
 
-export const useMachineStore = defineStore('machine', {
+export const useMaintenanceStore = defineStore('maintenance', {
   state: () => ({
-    machines: []
+    maintenances: [],
+    currentMaintenance: null,
+    loading: false,
   }),
-
-    actions: {
-      async fetchMachine() {
-        const res = await api.get('/machines');
-        this.machines = res.data;
-      },
-      async addMachine(machine) {
-        const res = await api.post("/machines", machine);
-        this.machines.push(res.data);
-      },
-      async deleteMachine(id) {
-        await api.delete(`/machines/${id}`);
-        this.machines = this.machines.filter( u => u._id !== id);
-      }, 
-      async updateMachine(id, machine) {
-        const res = await api.put(`/machines/${id}`, machine);
-        const i = this.machine.findIndex( m => m._id === id);
-        if (i !== -1) this.machines[i] = res.data; 
+  actions: {
+    async fetchMaintenances() {
+      this.loading = true;
+      try {
+        const response = await maintenanceService.getAll();
+        this.maintenances = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar manutenções:', error);
+      } finally {
+        this.loading = false;
       }
-  }
+    },
+  },
+  getters: {
+    overdueMaintenances: (state) => state.maintenances.filter(m => m.status === 'vermelho'),
+    completedMaintenances: (state) => state.maintenances.filter(m => m.status === 'verde'),
+    pendingMaintenances: (state) => state.maintenances.filter(m => m.status === 'amarelo'),
+  },
 });
