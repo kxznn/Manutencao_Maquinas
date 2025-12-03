@@ -1,43 +1,62 @@
 <template>
-  <div class="card">
-    <p class="label">{{ label }}</p>
-    <h2 class="value">{{ value }}</h2>
-  </div>
+<!-- card simples que mostra uma métrica -->
+<div class="bg-white p-4 rounded shadow">
+<div class="text-sm text-gray-500">{{ title }}</div>
+<div class="text-2xl font-bold">{{ value }}</div>
+</div>
 </template>
 
-<script>
-export default {
-  name: 'KpiCard',
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    value: {
-      type: [String, Number],
-      required: true
-    }
-  }
-}
+
+<script setup>
+import { defineProps } from 'vue'
+
+
+// recebe props title e value
+const props = defineProps({
+title: { type: String, required: true },
+value: { type: [Number,String], default: 0 }
+})
 </script>
 
-<style scoped>
-.card {
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 1rem; /* equivalente a rounded-2xl */
-  padding: 1rem; /* equivalente a p-4 */
-  text-align: center;
-}
 
-.label {
-  color: #6b7280; /* text-gray-500 */
-  font-size: 0.875rem; /* text-sm */
-}
+--- src/components/LineChart.vue ---
+<template>
+<!-- wrapper para chart.js via vue-chartjs -->
+<div>
+<canvas ref="canvas" />
+</div>
+</template>
 
-.value {
-  font-size: 1.5rem; /* text-2xl */
-  font-weight: bold;
-  color: #2563eb; /* text-blue-600 */
+
+<script setup>
+import { onMounted, ref, watch } from 'vue'
+import { Chart, registerables } from 'chart.js'
+
+
+// registra elementos do chart.js
+Chart.register(...registerables)
+
+
+const props = defineProps({ chartData: { type: Object, required: true } })
+const canvas = ref(null)
+let chartInstance = null
+
+
+onMounted(() => {
+// cria chart quando montar
+chartInstance = new Chart(canvas.value.getContext('2d'), {
+type: 'bar',
+data: props.chartData,
+options: { responsive: true }
+})
+})
+
+
+watch(() => props.chartData, (newData) => {
+// atualiza dados do chart quando chartData mudar
+if (chartInstance) {
+chartInstance.data = newData
+chartInstance.update()
 }
-</style>
+})
+</script>
