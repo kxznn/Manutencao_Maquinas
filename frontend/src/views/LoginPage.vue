@@ -75,26 +75,42 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import api from "../services/api"; // 🔥 IMPORTANTE (resolve "api is not defined")
 
-const router = useRouter()
+const router = useRouter();
 
-const email = ref('')
-const password = ref('')
-const errorMessage = ref('')
-const isLoading = ref(false)
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
+const isLoading = ref(false);
 
-const handleLogin = () => {
-  isLoading.value = true
-  errorMessage.value = ''
-  setTimeout(() => {
-    if (password.value.length < 4) {
-      errorMessage.value = 'Senha incorreta. Tente novamente.'
-      isLoading.value = false
-    } else {
-      router.push('/dashboard') 
-    }
-  }, 1000)
-}
+// 🔥 Função de Login conectada ao backend
+const login = async () => {
+  isLoading.value = true;
+  errorMessage.value = "";
+
+  try {
+    // chamada ao backend
+    const res = await api.post("/auth/login", {
+      email: email.value,
+      password: password.value,
+    });
+
+    // salvar token no navegador
+    localStorage.setItem("token", res.data.token);
+
+    // redirecionar para dashboard
+    router.push("/dashboard");
+
+  } catch (err) {
+    // backend rejeitou
+    errorMessage.value = "Credenciais inválidas";
+  } finally {
+    isLoading.value = false;
+  }
+};
 </script>
+
+
